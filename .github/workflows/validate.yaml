@@ -22,14 +22,13 @@ jobs:
           curl -L https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz | tar xzf - linux-amd64/helm
           mv linux-amd64/helm ./
       - name: helm lint
-        working-directory: charts/
         run: |
-          for d in ./*/; do
+          for d in charts/*/; do
             helm lint "$d";
           done
       - name: helm verify
         working-directory: charts/
         run: |
-          for d in ./*/; do
+          for d in charts/*/; do
             helm verify "$d";
           done
