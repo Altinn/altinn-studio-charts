@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  release:
+  lint-chart:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,9 +26,4 @@ jobs:
         run: |
           for d in charts/*/; do
             helm lint "$d";
-          done
-      - name: helm verify
-        run: |
-          for d in charts/*/; do
-            helm verify "$d";
           done
