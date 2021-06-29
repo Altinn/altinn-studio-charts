@@ -12,7 +12,7 @@ the latest versions of the packages.
 
 You can then run `helm search repo altinn-studio` to see the charts.
 
-To install the <example> chart:
+To install the \<example> chart:
 
     helm install my-<example> altinn-studio/<example>
 
