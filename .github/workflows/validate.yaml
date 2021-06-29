@@ -3,6 +3,7 @@ name: Validate Charts
 on:
   push:
     branches:
+      - '*'
       - '!main'
       - '!gh-pages'
   pull_request:
@@ -27,7 +28,6 @@ jobs:
             helm lint "$d";
           done
       - name: helm verify
-        working-directory: charts/
         run: |
           for d in charts/*/; do
             helm verify "$d";
