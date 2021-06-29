@@ -24,6 +24,8 @@ jobs:
           mv linux-amd64/helm ./
       - name: helm lint
         run: |
-          for d in charts/*/; do
-            helm lint "$d";
-          done
+          if [ -d "charts" ]; then
+            for d in charts/*/; do
+              helm lint "$d";
+            done
+          fi
