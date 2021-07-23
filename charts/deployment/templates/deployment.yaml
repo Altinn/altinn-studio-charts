@@ -20,6 +20,9 @@ spec:
       {{- if .Values.linkerd.enabled }}
       annotations:
         linkerd.io/inject: enabled
+        config.linkerd.io/proxy-cpu-request: 100m
+        config.linkerd.io/proxy-memory-limit: 250Mi
+        config.linkerd.io/proxy-memory-request: 20Mi
       {{- end }}
     spec:
     {{- if .Values.image.pullSecrets }}
@@ -43,6 +46,20 @@ spec:
               value: "/mnt/keys"
           ports:
             - containerPort: {{ .Values.service.internalPort }}
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            {{- end }}
+            {{- if .Values.resources.limits }}
+            limits:
+              {{- if .Values.resources.limits.cpu }}
+              cpu: {{ .Values.resources.limits.cpu }}
+              {{- end }}
+              {{- if .Values.resources.limits.memory }}
+              memory: {{ .Values.resources.limits.memory }}
+              {{- end }}
+            {{- end }}
           securityContext:
             runAsUser: 1000
             runAsGroup: 3000

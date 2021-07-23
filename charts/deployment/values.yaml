@@ -1,4 +1,20 @@
-replicaCount: 1
+replicaCount: 2
+
+autoScaling:
+  enabled: true
+  replicas:
+    min: 2
+    max: 10
+  avgCpuUtilization: 70
+  behavior:
+    stabilizationWindowSeconds:
+      scaleUp: 0
+      scaleDown: 120
+
+resources:
+  requests:
+    cpu: 400m
+    memory: 128Mi
 
 image:
   # Set "repository" name of your image for manual Helm install and upgrade.
