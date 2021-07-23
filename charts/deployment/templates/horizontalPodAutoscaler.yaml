@@ -8,18 +8,18 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: {{ template "fullname" . }}
-  minReplicas: {{ .Values.autoScaling.replicas.min | default 2 }}
-  maxReplicas: {{ .Values.autoScaling.replicas.max | default 10 }}
+  minReplicas: {{ .Values.autoscaling.replicas.min | default 2 }}
+  maxReplicas: {{ .Values.autoscaling.replicas.max | default 10 }}
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: {{ .Values.autoScaling.avgCpuUtilization | default 70}}
+        averageUtilization: {{ .Values.autoscaling.avgCpuUtilization | default 70}}
   behavior:
     scaleDown:
-      stabilizationWindowSeconds: {{ .Values.autoScaling.behavior.stabilizationWindowSeconds.scaleDown | default 120 }}
+      stabilizationWindowSeconds: {{ .Values.autoscaling.behavior.stabilizationWindowSeconds.scaleDown | default 120 }}
     scaleUp:
-      stabilizationWindowSeconds: {{ .Values.autoScaling.behavior.stabilizationWindowSeconds.scaleUp | default 0 }}
+      stabilizationWindowSeconds: {{ .Values.autoscaling.behavior.stabilizationWindowSeconds.scaleUp | default 0 }}
 {{- end }}

@@ -50,7 +50,6 @@ spec:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}
               memory: {{ .Values.resources.requests.memory }}
-            {{- end }}
             {{- if .Values.resources.limits }}
             limits:
               {{- if .Values.resources.limits.cpu }}

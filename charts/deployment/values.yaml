@@ -1,6 +1,6 @@
 replicaCount: 2
 
-autoScaling:
+autoscaling:
   enabled: true
   replicas:
     min: 2
