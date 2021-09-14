@@ -50,3 +50,6 @@ volumes:
   - name: accesstoken
     secret:
       secretName: accesstoken
+
+keyvaultSecrets:
+  enabled: false   ## Change this to true to enable secrets support

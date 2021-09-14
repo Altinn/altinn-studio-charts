@@ -49,12 +49,21 @@ spec:
             allowPrivilegeEscalation: false
           {{- if .Values.volumeMounts}}
           volumeMounts:
+            {{- if .Values.keyvaultSecrets.enabled }}
+            - name: altinn-appsettings-secret
+              mountPath: "/altinn-appsettings-secret"
+            {{- end }}
             {{- range $mount := .Values.volumeMounts}}
             - name: {{ $mount.name }}
               mountPath: {{ $mount.mountPath }}
             {{- end }}
           {{- end }}
       volumes:
+        {{- if .Values.keyvaultSecrets.enabled }}
+          - name: altinn-appsettings-secret
+            secret:
+              secretName: altinn-appsettings-secret
+        {{- end }}
         {{- range $volume := .Values.volumes }}
           - name: {{ $volume.name }}
             {{- if $volume.persistentVolumeClaim }}
