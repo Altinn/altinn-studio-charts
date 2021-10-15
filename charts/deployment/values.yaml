@@ -13,8 +13,8 @@ autoscaling:
 
 resources:
   requests:
-    cpu: 400m
-    memory: 128Mi
+    cpu: 300m
+    memory: 256Mi
 
 image:
   # Set "repository" name of your image for manual Helm install and upgrade.
