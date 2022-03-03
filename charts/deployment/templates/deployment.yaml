@@ -70,6 +70,22 @@ spec:
               mountPath: {{ $mount.mountPath }}
             {{- end }}
           {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /health/
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: 30
+            failureThreshold: 3
+            periodSeconds: 3
+            timeoutSeconds: 1
+          livenessProbe:
+              httpGet:
+                path: /health/
+                port: {{ .Values.service.internalPort }}
+              initialDelaySeconds: 3
+              failureThreshold: 3
+              periodSeconds: 10
+
       volumes:
         {{- range $volume := .Values.volumes }}
           - name: {{ $volume.name }}
