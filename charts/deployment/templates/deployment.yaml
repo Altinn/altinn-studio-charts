@@ -70,6 +70,7 @@ spec:
               mountPath: {{ $mount.mountPath }}
             {{- end }}
           {{- end }}
+          {{- if .Values.readiness.enabled}}
           readinessProbe:
             httpGet:
               path: {{ .Values.readiness.path }}
@@ -78,6 +79,8 @@ spec:
             failureThreshold: {{ .Values.readiness.failureThreshold }}
             periodSeconds: {{ .Values.readiness.periodSeconds }}
             timeoutSeconds: {{ .Values.readiness.timeoutSeconds }}
+          {{- end }}
+          {{- if .Values.liveness.enabled}}
           livenessProbe:
               httpGet:
                 path: {{ .Values.liveness.path }}
@@ -85,7 +88,7 @@ spec:
               initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
               failureThreshold: {{ .Values.liveness.failureThreshold }}
               periodSeconds: {{ .Values.liveness.periodSeconds }}
-
+          {{- end }}
       volumes:
         {{- range $volume := .Values.volumes }}
           - name: {{ $volume.name }}
