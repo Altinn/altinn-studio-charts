@@ -69,14 +69,14 @@ volumes:
 
 readiness:
   enabled: false
-  path: /health/
+  path: /health
   initialDelaySeconds: 30
   failureThreshold: 3
   periodSeconds: 3
   timeoutSeconds: 1
 liveness:
   enabled: false
-  path: /health/
+  path: /health
   initialDelaySeconds: 3
   failureThreshold: 3
   periodSeconds: 10
