@@ -72,19 +72,19 @@ spec:
           {{- end }}
           readinessProbe:
             httpGet:
-              path: /health/
+              path: {{ .Values.readiness.path }}
               port: {{ .Values.service.internalPort }}
-            initialDelaySeconds: 30
-            failureThreshold: 3
-            periodSeconds: 3
-            timeoutSeconds: 1
+            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
+            failureThreshold: {{ .Values.readiness.failureThreshold }}
+            periodSeconds: {{ .Values.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.readiness.timeoutSeconds }}
           livenessProbe:
               httpGet:
-                path: /health/
+                path: {{ .Values.liveness.path }}
                 port: {{ .Values.service.internalPort }}
-              initialDelaySeconds: 3
-              failureThreshold: 3
-              periodSeconds: 10
+              initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+              failureThreshold: {{ .Values.liveness.failureThreshold }}
+              periodSeconds: {{ .Values.liveness.periodSeconds }}
 
       volumes:
         {{- range $volume := .Values.volumes }}

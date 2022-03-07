@@ -66,3 +66,15 @@ volumes:
   - name: accesstoken
     secret:
       secretName: accesstoken
+
+readiness:
+  path: /health/
+  initialDelaySeconds: 30
+  failureThreshold: 3
+  periodSeconds: 3
+  timeoutSeconds: 1
+liveness:
+  path: /health/
+  initialDelaySeconds: 3
+  failureThreshold: 3
+  periodSeconds: 10
