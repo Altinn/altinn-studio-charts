@@ -13,8 +13,8 @@ autoscaling:
 
 resources:
   requests:
-    cpu: 300m
-    memory: 256Mi
+    cpu: 50m
+    memory: 128Mi
 
 podAnnotations: {}
 
@@ -68,3 +68,17 @@ volumes:
   - name: accesstoken
     secret:
       secretName: accesstoken
+
+readiness:
+  enabled: false
+  path: /health
+  initialDelaySeconds: 30
+  failureThreshold: 3
+  periodSeconds: 3
+  timeoutSeconds: 1
+liveness:
+  enabled: false
+  path: /health
+  initialDelaySeconds: 3
+  failureThreshold: 3
+  periodSeconds: 10
