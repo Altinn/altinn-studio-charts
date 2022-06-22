@@ -17,13 +17,16 @@ spec:
       labels:
         app: {{ template "fullname" . }}
         release: {{ .Release.Name }}
-      {{- if .Values.linkerd.enabled }}
       annotations:
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- if .Values.linkerd.enabled }}
         linkerd.io/inject: enabled
         config.linkerd.io/proxy-cpu-request: 100m
         config.linkerd.io/proxy-memory-limit: 250Mi
         config.linkerd.io/proxy-memory-request: 20Mi
-      {{- end }}
+        {{- end }}
     spec:
     {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
