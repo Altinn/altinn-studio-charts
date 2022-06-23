@@ -19,7 +19,7 @@ resources:
 podAnnotations: {}
   # Additional pod annotations (e.g. for mesh injection)
   # Enabling of linkerd in seperate value under
-  # config.linkerd.io/proxy-cpu-request: 100m
+  # config.linkerd.io/proxy-cpu-request: 10m
   # config.linkerd.io/proxy-memory-limit: 250Mi
   # config.linkerd.io/proxy-memory-request: 20Mi
 
