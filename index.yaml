@@ -2,6 +2,14 @@ apiVersion: v1
 entries:
   deployment:
   - apiVersion: v1
+    created: "2022-09-06T07:05:20.334146305Z"
+    description: A Helm chart for Kubernetes
+    digest: 3cc684d30679453ef80ba9efe23c28967a3e4aa982090129c4767bd36561c669
+    name: deployment
+    urls:
+    - https://github.com/Altinn/altinn-studio-charts/releases/download/deployment-2.3.0/deployment-2.3.0.tgz
+    version: 2.3.0
+  - apiVersion: v1
     created: "2022-06-22T07:41:19.061563865Z"
     description: A Helm chart for Kubernetes
     digest: e963008fc3c41ad02c1089cd2dbb02f0ede624b94a0a18a69f88395a771767f3
@@ -33,4 +41,4 @@ entries:
     urls:
     - https://github.com/Altinn/altinn-studio-charts/releases/download/deployment-1.1.0/deployment-1.1.0.tgz
     version: 1.1.0
-generated: "2022-06-22T07:41:19.061618269Z"
+generated: "2022-09-06T07:05:20.334178205Z"
