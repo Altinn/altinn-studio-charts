@@ -1,8 +1,8 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: pdf
-  name: pdf-generator-role
+  name: {{ template "name" . }}
+  namespace: {{ .Values.namespace }}
 rules:
   - apiGroups: ["apps"]
     resources: ["pdf"]
