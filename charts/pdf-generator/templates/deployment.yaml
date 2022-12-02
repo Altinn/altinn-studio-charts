@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "name" . }}
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.namespace }}
   labels:
     app: {{ template "name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
@@ -22,9 +22,7 @@ spec:
         linkerd.io/inject: enabled
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
     spec:
-    {{- if .Values.image.serviceAccount}}
-      serviceAccountName: {{ .Values.image.serviceAccount }}
-    {{- end }}
+      serviceAccountName: {{ template "name" . }}
     {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
       {{- range $secret := .Values.image.pullSecrets }}

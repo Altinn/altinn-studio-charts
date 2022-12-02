@@ -25,7 +25,6 @@ image:
   repository: browserless/chrome
   tag: 1-puppeteer-19.2.2
   pullPolicy: IfNotPresent
-  serviceAccount: pdf-generatorsa
 
 service:
   name: pdf-generator
