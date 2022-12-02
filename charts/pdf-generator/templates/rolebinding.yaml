@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pdf-generator-role-binding
+  namespace: pdf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pdf-generator-role
+subjects:
+  - kind: ServiceAccount
+    name: pdf-generatorsa
+    namespace: pdf
