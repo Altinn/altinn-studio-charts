@@ -41,4 +41,13 @@ entries:
     urls:
     - https://github.com/Altinn/altinn-studio-charts/releases/download/deployment-1.1.0/deployment-1.1.0.tgz
     version: 1.1.0
-generated: "2022-09-06T07:05:20.334178205Z"
+  pdf-generator:
+  - apiVersion: v1
+    created: "2022-12-05T16:29:24.965886444Z"
+    description: A Helm chart for the pdf generator
+    digest: f17b8d05a897c93f2138a6cb281c57d9914fa47d92a06ae2f495ec59a0f22fdf
+    name: pdf-generator
+    urls:
+    - https://github.com/Altinn/altinn-studio-charts/releases/download/pdf-generator-1.2.4/pdf-generator-1.2.4.tgz
+    version: 1.2.4
+generated: "2022-12-05T16:29:24.965900845Z"
