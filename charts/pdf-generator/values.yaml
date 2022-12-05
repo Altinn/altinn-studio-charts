@@ -2,7 +2,6 @@ replicaCount: 2
 
 environment: development
 
-namespace: pdf
 
 autoscaling:
   enabled: true
