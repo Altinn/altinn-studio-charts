@@ -43,6 +43,14 @@ entries:
     version: 1.1.0
   pdf-generator:
   - apiVersion: v1
+    created: "2022-12-16T09:25:50.400568572Z"
+    description: A Helm chart for the pdf generator
+    digest: 21a6786aad6b5467f20cf30e8b891a3f8c1f7e5640658edc8447542dc773367e
+    name: pdf-generator
+    urls:
+    - https://github.com/Altinn/altinn-studio-charts/releases/download/pdf-generator-1.2.5/pdf-generator-1.2.5.tgz
+    version: 1.2.5
+  - apiVersion: v1
     created: "2022-12-05T16:29:24.965886444Z"
     description: A Helm chart for the pdf generator
     digest: f17b8d05a897c93f2138a6cb281c57d9914fa47d92a06ae2f495ec59a0f22fdf
@@ -50,4 +58,4 @@ entries:
     urls:
     - https://github.com/Altinn/altinn-studio-charts/releases/download/pdf-generator-1.2.4/pdf-generator-1.2.4.tgz
     version: 1.2.4
-generated: "2022-12-05T16:29:24.965900845Z"
+generated: "2022-12-16T09:25:50.400591672Z"
