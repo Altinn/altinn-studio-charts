@@ -2,12 +2,13 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ template "name" . }}
+  namespace: {{ .Release.namespace }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ template "deploymentname" . }}
+    name: {{ template "name" . }}
   minReplicas: {{ .Values.autoscaling.replicas.min | default 2 }}
   maxReplicas: {{ .Values.autoscaling.replicas.max | default 10 }}
   metrics:
