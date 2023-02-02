@@ -14,7 +14,7 @@ autoscaling:
 resources:
   requests:
     cpu: 50m
-    memory: 128Mi
+    memory: 256Mi
 
 podAnnotations: {}
   # Additional pod annotations (e.g. for mesh injection)
