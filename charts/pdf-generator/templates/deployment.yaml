@@ -55,3 +55,21 @@ spec:
               memory: {{ .Values.resources.limits.memory }}
               {{- end }}
             {{- end }}
+          {{- if .Values.startup.enabled}}
+          startupProbe:
+            httpGet:
+              path: {{ .Values.startup.path }}
+              port: {{ .Values.service.internalPort }}
+          {{- end }}
+          {{- if .Values.readiness.enabled}}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readiness.path }}
+              port: {{ .Values.service.internalPort }}
+          {{- end }}
+          {{- if .Values.liveness.enabled}}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.liveness.path }}
+              port: {{ .Values.service.internalPort }}
+          {{- end }}
