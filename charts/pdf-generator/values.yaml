@@ -31,3 +31,15 @@ service:
   externalPort: 80
   # If your application is running on another port, change only the internal port.
   internalPort: 3000
+
+startup:
+  enabled: true
+  path: "/metrics"
+
+liveness:
+  enabled: true
+  path: "/metrics"
+
+readiness:
+  enabled: true
+  path: "/metrics"
