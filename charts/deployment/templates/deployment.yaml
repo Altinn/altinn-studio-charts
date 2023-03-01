@@ -71,6 +71,15 @@ spec:
               mountPath: {{ $mount.mountPath }}
             {{- end }}
           {{- end }}
+          {{- if .Values.startup.enabled}}
+          startupProbe:
+            httpGet:
+              path: {{ .Values.startup.path }}
+              port: {{ .Values.service.internalPort }}
+            failureThreshold: {{ .Values.startup.failureThreshold }}
+            periodSeconds: {{ .Values.startup.periodSeconds }}
+            timeoutSeconds: {{ .Values.startup.timeoutSeconds }}
+          {{- end }}
           {{- if .Values.readiness.enabled}}
           readinessProbe:
             httpGet:
