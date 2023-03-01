@@ -74,6 +74,12 @@ volumes:
     secret:
       secretName: accesstoken
 
+startup:
+  enabled: false
+  path: /health
+  failureThreshold: 3
+  periodSeconds: 10
+  timeoutSeconds: 1
 readiness:
   enabled: false
   path: /health
