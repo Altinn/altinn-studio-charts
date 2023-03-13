@@ -24,6 +24,7 @@ spec:
         {{- if .Values.linkerd.enabled }}
         linkerd.io/inject: enabled
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+        config.linkerd.io/skip-outbound-ports: "443"
         {{- end }}
     spec:
     {{- if .Values.image.pullSecrets }}
