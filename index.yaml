@@ -2,6 +2,14 @@ apiVersion: v1
 entries:
   deployment:
   - apiVersion: v1
+    created: "2023-03-13T14:10:33.233937029Z"
+    description: A Helm chart for Kubernetes
+    digest: 394c141fbbc7790f8e279afe3fa333a84a9f2a1e7c88f0dc4b7d425a654ea9a7
+    name: deployment
+    urls:
+    - https://github.com/Altinn/altinn-studio-charts/releases/download/deployment-2.8.0/deployment-2.8.0.tgz
+    version: 2.8.0
+  - apiVersion: v1
     created: "2023-03-13T10:19:13.125176167Z"
     description: A Helm chart for Kubernetes
     digest: 58b14ea01cc117e3fa28eccf67cbfd09fb3d143d4e17d13917fc1595ad18aa54
@@ -98,4 +106,4 @@ entries:
     urls:
     - https://github.com/Altinn/altinn-studio-charts/releases/download/pdf-generator-1.2.4/pdf-generator-1.2.4.tgz
     version: 1.2.4
-generated: "2023-03-13T10:19:13.125205867Z"
+generated: "2023-03-13T14:10:33.233978929Z"
