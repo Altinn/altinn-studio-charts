@@ -6,7 +6,7 @@ metadata:
 spec:
   headers:
     customRequestHeaders:
-      l5d-dst-override: {{ printf "%s.default.svc.cluster.local" (include "fullname" .) }}
+      l5d-dst-override: {{ printf "%s.default.svc.cluster.local:80" (include "fullname" .) }}
 ---
 {{- end }}
 
