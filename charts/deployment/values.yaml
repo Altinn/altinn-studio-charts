@@ -86,10 +86,11 @@ readiness:
   initialDelaySeconds: 30
   failureThreshold: 3
   periodSeconds: 3
-  timeoutSeconds: 1
+  timeoutSeconds: 30
 liveness:
   enabled: false
   path: /health
   initialDelaySeconds: 3
   failureThreshold: 3
   periodSeconds: 10
+  timeoutSeconds: 30

@@ -92,12 +92,13 @@ spec:
           {{- end }}
           {{- if .Values.liveness.enabled}}
           livenessProbe:
-              httpGet:
-                path: {{ .Values.liveness.path }}
-                port: {{ .Values.service.internalPort }}
-              initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
-              failureThreshold: {{ .Values.liveness.failureThreshold }}
-              periodSeconds: {{ .Values.liveness.periodSeconds }}
+            httpGet:
+              path: {{ .Values.liveness.path }}
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+            failureThreshold: {{ .Values.liveness.failureThreshold }}
+            periodSeconds: {{ .Values.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.liveness.timeoutSeconds }}
           {{- end }}
       volumes:
         {{- range $volume := .Values.volumes }}
