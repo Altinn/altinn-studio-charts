@@ -1,0 +1,6 @@
+apiVersion: v2
+name: altinn-dashboards-grafana
+description: Add Altinn Grafana dashboards
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
