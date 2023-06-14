@@ -1,5 +1,17 @@
 apiVersion: v1
 entries:
+  altinn-dashboards-grafana:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2023-06-14T10:25:58.265243859Z"
+    description: Add Altinn Grafana dashboards
+    digest: 6f1ad3672a2e1f42d37359bf9047d2e4f39a8cc4172c550f501e54ae46235fce
+    icon: https://raw.githubusercontent.com/grafana/grafana/master/public/img/logo_transparent_400x.png
+    name: altinn-dashboards-grafana
+    type: application
+    urls:
+    - https://github.com/Altinn/altinn-studio-charts/releases/download/altinn-dashboards-grafana-1.0.0/altinn-dashboards-grafana-1.0.0.tgz
+    version: 1.0.0
   deployment:
   - apiVersion: v1
     created: "2023-03-13T14:10:33.233937029Z"
@@ -106,4 +118,4 @@ entries:
     urls:
     - https://github.com/Altinn/altinn-studio-charts/releases/download/pdf-generator-1.2.4/pdf-generator-1.2.4.tgz
     version: 1.2.4
-generated: "2023-03-13T14:10:33.233978929Z"
+generated: "2023-06-14T10:25:58.265265558Z"
