@@ -2,6 +2,15 @@ apiVersion: v1
 entries:
   altinn-dashboards-grafana:
   - apiVersion: v2
+    created: "2023-07-04T08:05:31.369067827Z"
+    description: Add Altinn Grafana dashboards
+    digest: 6de4c404cad76fbb54356877f8732933baaca3583a08ce9a17ef2afa38cfdb30
+    icon: https://raw.githubusercontent.com/grafana/grafana/master/public/img/logo_transparent_400x.png
+    name: altinn-dashboards-grafana
+    urls:
+    - https://github.com/Altinn/altinn-studio-charts/releases/download/altinn-dashboards-grafana-1.0.1/altinn-dashboards-grafana-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     appVersion: 1.0.0
     created: "2023-06-14T10:25:58.265243859Z"
     description: Add Altinn Grafana dashboards
@@ -118,4 +127,20 @@ entries:
     urls:
     - https://github.com/Altinn/altinn-studio-charts/releases/download/pdf-generator-1.2.4/pdf-generator-1.2.4.tgz
     version: 1.2.4
-generated: "2023-06-14T10:25:58.265265558Z"
+  traefik-crds:
+  - apiVersion: v2
+    appVersion: 2.10.0
+    created: "2023-07-04T08:05:31.522686899Z"
+    description: 'A Helm chart that deploy custom resource definitions (CRDs) for
+      traefik. '
+    digest: 125a816f7904eec95a26ada97ae786acf9084d5c6ad995cb78def76a40e4c5c2
+    icon: https://raw.githubusercontent.com/traefik/traefik/v2.3/docs/content/assets/img/traefik.logo.png
+    keywords:
+    - traefik
+    - crds
+    name: traefik-crds
+    type: application
+    urls:
+    - https://github.com/Altinn/altinn-studio-charts/releases/download/traefik-crds-2.10.0/traefik-crds-2.10.0.tgz
+    version: 2.10.0
+generated: "2023-07-04T08:05:31.522749101Z"
