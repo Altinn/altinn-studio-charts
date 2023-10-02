@@ -102,6 +102,24 @@ entries:
     urls:
     - https://github.com/Altinn/altinn-studio-charts/releases/download/deployment-1.1.0/deployment-1.1.0.tgz
     version: 1.1.0
+  helm-exporter:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2023-10-02T07:58:00.090003876Z"
+    description: Exporter for helm metrics
+    digest: 09eedb67406ccc32c33589a799129ac18f3f8a3ee0fa979796637e5076920312
+    home: https://github.com/sstarcher/helm-exporter
+    maintainers:
+    - email: shane.starcher@gmail.com
+      name: sstarcher
+      url: https://shanestarcher.com
+    name: helm-exporter
+    sources:
+    - https://github.com/sstarcher/helm-exporter
+    type: application
+    urls:
+    - https://github.com/Altinn/altinn-studio-charts/releases/download/helm-exporter-1.2.10/helm-exporter-1.2.10.tgz
+    version: 1.2.10
   pdf-generator:
   - apiVersion: v1
     created: "2023-09-14T12:58:15.849708563Z"
@@ -159,4 +177,4 @@ entries:
     urls:
     - https://github.com/Altinn/altinn-studio-charts/releases/download/traefik-crds-2.10.0/traefik-crds-2.10.0.tgz
     version: 2.10.0
-generated: "2023-09-14T12:58:15.849750462Z"
+generated: "2023-10-02T07:58:00.090194577Z"
