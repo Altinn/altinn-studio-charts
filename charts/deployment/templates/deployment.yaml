@@ -8,9 +8,9 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  {{- if .Values.autoscaling.enabled false }}
+{{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
+{{- end }}
   selector:
     matchLabels:
       app: {{ template "fullname" . }}
