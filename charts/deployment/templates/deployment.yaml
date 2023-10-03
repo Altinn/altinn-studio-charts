@@ -8,7 +8,9 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
+  {{- if .Values.autoscaling.enabled false }}
   replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       app: {{ template "fullname" . }}
@@ -32,6 +34,20 @@ spec:
       {{- range $secret := .Values.image.pullSecrets }}
         - name : {{ $secret.name }}
       {{- end }}
+    {{- end }}
+    {{- if .Values.podAntiAffinity.enabled }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "fullname" . }}
+              topologyKey: kubernetes.io/hostname
+            weight: 100
     {{- end }}
       containers:
         - name: {{ .Chart.Name }}
