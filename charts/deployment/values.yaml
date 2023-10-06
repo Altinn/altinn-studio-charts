@@ -4,12 +4,21 @@ autoscaling:
   enabled: true
   replicas:
     min: 2
-    max: 10
-  avgCpuUtilization: 70
+    max: 6
+  avgCpuUtilization: 75
   behavior:
-    stabilizationWindowSeconds:
-      scaleUp: 0
-      scaleDown: 120
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Pods
+        value: 1
+        periodSeconds: 15
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Pods
+        value: 1
+        periodSeconds: 60
 
 resources:
   requests:
@@ -22,6 +31,9 @@ podAnnotations: {}
   # config.linkerd.io/proxy-cpu-request: 10m
   # config.linkerd.io/proxy-memory-limit: 250Mi
   # config.linkerd.io/proxy-memory-request: 20Mi
+
+podAntiAffinity:
+  enabled: true
 
 image:
   # Set "repository" name of your image for manual Helm install and upgrade.
