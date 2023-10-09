@@ -18,8 +18,5 @@ spec:
         type: Utilization
         averageUtilization: {{ .Values.autoscaling.avgCpuUtilization | default 70}}
   behavior:
-{{- if .Values.autoscaling.behavior }}
-  behavior:
 {{ toYaml .Values.autoscaling.behavior | indent 4 }}
-{{- end }}
 {{- end }}
