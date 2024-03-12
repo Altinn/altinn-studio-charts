@@ -1,0 +1,15 @@
+{{- if .Values.metrics.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    release: {{ .Values.metrics.prometheus.instance }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}
+      release: {{ .Release.Name }}
+  endpoints:
+  - port: {{ .Values.metrics.serviceport.portname }}
+{{- end }}
