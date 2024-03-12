@@ -106,3 +106,14 @@ liveness:
   failureThreshold: 3
   periodSeconds: 10
   timeoutSeconds: 30
+
+metrics:
+  enabled: false
+  serviceport:
+    port: 5006
+    targetPort: 5006
+    protocol: TCP
+    portname: metrics
+  monitor:
+    instance: kube-prometheus-stack
+  
