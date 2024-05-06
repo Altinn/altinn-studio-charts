@@ -2,22 +2,30 @@ replicaCount: 2
 
 environment: development
 
-
 autoscaling:
   enabled: true
   replicas:
     min: 2
-    max: 10
-  avgCpuUtilization: 70
+    max: 6
+  avgCpuUtilization: 75
   behavior:
-    stabilizationWindowSeconds:
-      scaleUp: 0
-      scaleDown: 120
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Pods
+        value: 1
+        periodSeconds: 15
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Pods
+        value: 1
+        periodSeconds: 60
 
 resources:
   requests:
-    cpu: 30m
-    memory: 128Mi
+    cpu: 200m
+    memory: 256Mi
 
 image:
   # Set "repository" name of your image for manual Helm install and upgrade.
