@@ -40,6 +40,9 @@ service:
   # If your application is running on another port, change only the internal port.
   internalPort: 3000
 
+podAntiAffinity:
+  enabled: true
+
 startup:
   enabled: true
   path: "/metrics"
