@@ -47,11 +47,20 @@ podAntiAffinity:
 startup:
   enabled: true
   path: "/metrics"
-
-liveness:
-  enabled: true
-  path: "/metrics"
-
+  failureThreshold: 3
+  periodSeconds: 10
+  timeoutSeconds: 1
 readiness:
   enabled: true
   path: "/metrics"
+  initialDelaySeconds: 30
+  failureThreshold: 3
+  periodSeconds: 3
+  timeoutSeconds: 30
+liveness:
+  enabled: true
+  path: "/metrics"
+  initialDelaySeconds: 3
+  failureThreshold: 3
+  periodSeconds: 10
+  timeoutSeconds: 30
