@@ -2,4 +2,4 @@ apiVersion: v1
 description: A Helm chart for the pdf generator
 # name can only be lowercase. It is used in the templats.
 name: pdf-generator
-version: 1.6.0
+version: 1.6.1

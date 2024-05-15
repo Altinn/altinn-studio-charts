@@ -8,7 +8,7 @@ autoscaling:
     min: 2
     max: 6
   avgCpuUtilization: 75
-  avgMemoryUtilization: 75
+  avgMemoryUtilization: 80
   behavior:
     scaleUp:
       stabilizationWindowSeconds: 0
@@ -26,7 +26,7 @@ autoscaling:
 resources:
   requests:
     cpu: 250m
-    memory: 256Mi
+    memory: 384Mi
 
 image:
   # Set "repository" name of your image for manual Helm install and upgrade.
