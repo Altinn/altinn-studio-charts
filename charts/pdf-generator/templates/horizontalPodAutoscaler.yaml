@@ -18,9 +18,12 @@ spec:
       target:
         type: Utilization
         averageUtilization: {{ .Values.autoscaling.avgCpuUtilization | default 70}}
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.autoscaling.avgMemoryUtilization | default 70}}
   behavior:
-    scaleDown:
-      stabilizationWindowSeconds: {{ .Values.autoscaling.behavior.stabilizationWindowSeconds.scaleDown | default 120 }}
-    scaleUp:
-      stabilizationWindowSeconds: {{ .Values.autoscaling.behavior.stabilizationWindowSeconds.scaleUp | default 0 }}
+{{ toYaml .Values.autoscaling.behavior | indent 4 }}
 {{- end }}
