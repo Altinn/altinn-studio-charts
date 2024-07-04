@@ -146,6 +146,14 @@ entries:
     version: 1.2.10
   pdf-generator:
   - apiVersion: v1
+    created: "2024-07-04T07:48:49.782301018Z"
+    description: A Helm chart for the pdf generator
+    digest: f524ab40c58ea5b27863ef10d67172f665be71d01380b058f5308ec7d21492e4
+    name: pdf-generator
+    urls:
+    - https://github.com/Altinn/altinn-studio-charts/releases/download/pdf-generator-1.7.0/pdf-generator-1.7.0.tgz
+    version: 1.7.0
+  - apiVersion: v1
     created: "2024-05-15T08:10:11.958301308Z"
     description: A Helm chart for the pdf generator
     digest: c3e15f8d13b08a826bc33d3bf0051e0e8dc5e53031142c9a48acef4154ee063f
@@ -225,4 +233,4 @@ entries:
     urls:
     - https://github.com/Altinn/altinn-studio-charts/releases/download/traefik-crds-2.10.0/traefik-crds-2.10.0.tgz
     version: 2.10.0
-generated: "2024-05-15T08:10:11.958375647Z"
+generated: "2024-07-04T07:48:49.782358064Z"
