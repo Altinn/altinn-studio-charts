@@ -66,10 +66,8 @@ ingressRoute:
           port: 80
       middlewares:
         - name: hsts-header
-  # # If you need tls config other than what is default you can define it with these values
+  # # If you need tls config other than what is default you can define it here
   # tls:
-  #   options:
-  #     name: default
   #   secretName: ssl-cert
 
 volumeMounts:

@@ -35,10 +35,6 @@ spec:
   {{- end }}
   {{- if .Values.ingressRoute.tls }}
   tls:
-    {{- if .Values.ingressRoute.tls.options }}
-    options:
-      name: {{ .Values.ingressRoute.tls.options.name }}
-    {{- end }}
     {{- if .Values.ingressRoute.tls.secretName }}
     secretName: {{ .Values.ingressRoute.tls.secretName }}
     {{- end }}
