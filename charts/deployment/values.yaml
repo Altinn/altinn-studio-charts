@@ -40,9 +40,8 @@ image:
   repository:
   tag: latest
   pullPolicy: Always
-  pullSecrets:
-    # Change this to the name of your pull secret
-    - name: acr-secret
+  pullSecrets: []
+  # - name: myRegistryKeySecretName
 
 service:
   name: deployment

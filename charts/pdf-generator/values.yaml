@@ -2,26 +2,35 @@ replicaCount: 2
 
 environment: development
 
-
 autoscaling:
   enabled: true
   replicas:
     min: 2
-    max: 10
-  avgCpuUtilization: 70
+    max: 6
+  avgCpuUtilization: 75
+  avgMemoryUtilization: 80
   behavior:
-    stabilizationWindowSeconds:
-      scaleUp: 0
-      scaleDown: 120
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Pods
+        value: 1
+        periodSeconds: 15
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Pods
+        value: 1
+        periodSeconds: 60
 
 resources:
   requests:
-    cpu: 30m
-    memory: 128Mi
+    cpu: 250m
+    memory: 384Mi
 
 image:
   # Set "repository" name of your image for manual Helm install and upgrade.
-  repository: browserless/chrome
+  repository: altinncr.azurecr.io/browserless/chrome
   tag: 1-puppeteer-21.4.1
   pullPolicy: IfNotPresent
 
@@ -32,14 +41,26 @@ service:
   # If your application is running on another port, change only the internal port.
   internalPort: 3000
 
+podAntiAffinity:
+  enabled: true
+
 startup:
   enabled: true
   path: "/metrics"
-
-liveness:
-  enabled: true
-  path: "/metrics"
-
+  failureThreshold: 3
+  periodSeconds: 10
+  timeoutSeconds: 1
 readiness:
   enabled: true
   path: "/metrics"
+  initialDelaySeconds: 30
+  failureThreshold: 3
+  periodSeconds: 3
+  timeoutSeconds: 30
+liveness:
+  enabled: true
+  path: "/metrics"
+  initialDelaySeconds: 3
+  failureThreshold: 3
+  periodSeconds: 10
+  timeoutSeconds: 30

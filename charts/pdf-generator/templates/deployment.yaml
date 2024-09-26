@@ -9,7 +9,9 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
+{{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
+{{- end }}
   selector:
     matchLabels:
       app: {{ template "name" . }}
@@ -28,6 +30,20 @@ spec:
       {{- range $secret := .Values.image.pullSecrets }}
         - name : {{ $secret.name }}
       {{- end }}
+    {{- end }}
+    {{- if .Values.podAntiAffinity.enabled }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "fullname" . }}
+              topologyKey: kubernetes.io/hostname
+            weight: 100
     {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -60,16 +76,27 @@ spec:
             httpGet:
               path: {{ .Values.startup.path }}
               port: {{ .Values.service.internalPort }}
+            failureThreshold: {{ .Values.startup.failureThreshold }}
+            periodSeconds: {{ .Values.startup.periodSeconds }}
+            timeoutSeconds: {{ .Values.startup.timeoutSeconds }}
           {{- end }}
           {{- if .Values.readiness.enabled}}
           readinessProbe:
             httpGet:
               path: {{ .Values.readiness.path }}
               port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
+            failureThreshold: {{ .Values.readiness.failureThreshold }}
+            periodSeconds: {{ .Values.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.readiness.timeoutSeconds }}
           {{- end }}
           {{- if .Values.liveness.enabled}}
           livenessProbe:
             httpGet:
               path: {{ .Values.liveness.path }}
               port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+            failureThreshold: {{ .Values.liveness.failureThreshold }}
+            periodSeconds: {{ .Values.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.liveness.timeoutSeconds }}
           {{- end }}
