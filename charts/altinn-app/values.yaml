@@ -1,0 +1,99 @@
+environment: dev
+
+aksClusterName: "dev"
+
+appName: "altinn-example"
+team: "altinn"
+
+slo:
+  target: "99"
+# workload identity
+envs:
+  dev:
+    azureClientId: "000000-0000-0000-0000-000000000000"
+# someClusterName:
+#   azureClientId: "000000-0000-0000-0000-000000000000"
+
+image:
+  # repository: altinntjenesterregistry.azurecr.io/altinn-example
+  pullPolicy: IfNotPresent
+  containerPort: 5090
+
+environmentVariables:
+  dev:
+  # - name: myenv
+  #   value: myvalue 
+
+  # prod
+
+
+volumeMounts:
+  - name: altinn-appsettings
+    mountPath: "/altinn-appsettings"
+
+volumes:
+  - name: altinn-appsettings
+    secret:
+      secretName: altinn-appsettings-secret
+
+resources:
+  prod:
+    requests:
+      cpu: 500m
+      memory: 128Mi
+
+autoscaling:
+  enabled: false
+  # minReplicas: 2
+  # maxReplicas: 8
+  # targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+## set replica count if autoscaling is disabled
+replicaCount: 2
+
+service:
+  type: ClusterIP
+  externalPort: 80
+  internalPort: 5090
+
+serviceAccount:
+  create: true
+  annotations:
+    azure.workload.identity/client-id: ""
+linkerd:
+  enabled: true
+  header: altinn-example
+  host: altinn-example.default.svc.cluster.local:80
+
+ingressRoute:
+  name: altinn-example-ingress-route
+  entryPoints:
+    - http
+    - https
+  routes:
+    - match:
+        dev: Host(`internal.platform.dev.altinn.cloud`) && PathPrefix(`/example`)
+        # prod: Host(`internal.platform.prod.altinn.cloud`) && PathPrefix(`/example`)
+      kind: Rule
+      middlewares:
+        - name: hsts-header
+      services:
+        - name: altinn-example
+          port: 80
+  tls:
+    options:
+      name: tls-options
+    secretName: ssl-cert
+
+# jobs:
+#   my-cron-job:
+#     kind: CronJob
+#     schedule: "*/1 * * * *"
+#     image: curlimages/curl:latest
+#     command:
+#       - "curl"
+#       - "--fail"
+#       - "-X"
+#       - "DELETE"
+#       - "http://altinn-example.default.svc.cluster.local/example/api/v1/trigger/myendpoint"

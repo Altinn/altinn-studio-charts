@@ -1,0 +1,52 @@
+{{- if .Values.jobs }}
+{{- range $jobName, $job := .Values.jobs }}
+---
+apiVersion: batch/v1
+kind: {{ $job.kind | default "Job" }}
+metadata:
+  name: {{ $jobName }}
+spec:
+  {{- if eq $job.kind "CronJob" }}
+  schedule: "{{ $job.schedule }}"
+  concurrencyPolicy: {{ $job.concurrencyPolicy | default "Forbid" }}
+  successfulJobsHistoryLimit: {{ $job.successfulJobsHistoryLimit | default 1 }}
+  failedJobsHistoryLimit: {{ $job.failedJobsHistoryLimit | default 1 }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: {{ $jobName }}
+            image: {{ $job.image }}
+            command:
+            {{- tpl (toYaml $job.command) $ | nindent 12 }}
+          {{- if $job.env }}
+          env:
+          {{- range $key, $value := $job.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+          {{- end }}
+          {{- end }}
+          restartPolicy: {{ $job.restartPolicy | default "Never" }}
+      {{- with $job.backoffLimit }}
+      backoffLimit: {{ . }}
+      {{- end }}
+  {{- else }}
+  template:
+    spec:
+      containers:
+      - name: {{ $jobName }}
+        image: {{ $job.image }}
+        command:
+        {{- tpl (toYaml $job.command) $ | nindent 10 }}
+        {{- if $job.env }}
+        env:
+        {{- range $key, $value := $job.env }}
+          - name: {{ $key }}
+            value: "{{ $value }}"
+        {{- end }}
+        {{- end }}
+      restartPolicy: {{ $job.restartPolicy | default "Never" }}
+  {{- end }}
+{{- end }}
+{{- end }}
