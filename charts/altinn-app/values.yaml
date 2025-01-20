@@ -81,10 +81,9 @@ ingressRoute:
       services:
         - name: altinn-example
           port: 80
-  tls:
-    options:
-      name: tls-options
-    secretName: ssl-cert
+  # # Specify ssl-cert secret if not using default
+  # tls:
+  #   secretName: ssl-cert
 
 # jobs:
 #   my-cron-job:
