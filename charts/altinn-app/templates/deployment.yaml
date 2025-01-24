@@ -52,7 +52,6 @@ spec:
               {{- end }}
             {{- end }}
           readinessProbe:
-            # an http probe
             httpGet:
               path: /health
               port: {{ .Values.service.internalPort }}
@@ -62,7 +61,6 @@ spec:
             periodSeconds: 3
             timeoutSeconds: 1
           livenessProbe:
-              # an http probe
               httpGet:
                 path: /health
                 port: {{ .Values.service.internalPort }}
