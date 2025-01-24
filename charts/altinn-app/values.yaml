@@ -37,10 +37,10 @@ volumes:
       secretName: altinn-appsettings-secret
 
 resources:
-  prod:
-    requests:
-      cpu: 500m
-      memory: 128Mi
+  # prod:
+  #   requests:
+  #     cpu: 500m
+  #     memory: 128Mi
 
 autoscaling:
   enabled: false
