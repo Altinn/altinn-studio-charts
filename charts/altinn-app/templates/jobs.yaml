@@ -5,6 +5,8 @@ apiVersion: batch/v1
 kind: {{ $job.kind | default "Job" }}
 metadata:
   name: {{ $jobName }}
+  labels:
+    {{- include ".Chart.Name.labels" . | nindent 4 }}
 spec:
   {{- if eq $job.kind "CronJob" }}
   schedule: "{{ $job.schedule }}"

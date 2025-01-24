@@ -43,6 +43,7 @@ app.kubernetes.io/name: {{ .Values.appName }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app: {{ .Values.appName }}
 release: {{ .Release.Name }}
+team: {{ .Values.team }}
 {{- end }}
 
 {{/*

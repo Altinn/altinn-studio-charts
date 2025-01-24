@@ -5,6 +5,8 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: {{ .Values.ingressRoute.name }}
+  labels:
+    {{- include ".Chart.Name.labels" . | nindent 4 }}
 spec:
   entryPoints:
   {{- range $entryPoint := .Values.ingressRoute.entryPoints }}
@@ -37,10 +39,6 @@ spec:
   {{- end }}
   {{- if .Values.ingressRoute.tls }}
   tls:
-    {{- if .Values.ingressRoute.tls.options }}
-    options:
-      name: {{ .Values.ingressRoute.tls.options.name }}
-    {{- end }}
     {{- if .Values.ingressRoute.tls.secretName }}
     secretName: {{ .Values.ingressRoute.tls.secretName }}
     {{- end }}

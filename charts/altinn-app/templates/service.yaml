@@ -12,5 +12,5 @@ spec:
       protocol: TCP
       name: {{ .Values.service.name }}
   selector:
-    app: {{ template ".Chart.Name" . }}
+    app: {{ .Values.appName }}
     release: {{ .Release.Name }}

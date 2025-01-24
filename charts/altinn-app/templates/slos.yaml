@@ -1,10 +1,11 @@
-{{- if or (eq .Values.environment "dev") (eq .Values.environment "tt02") }}
+{{- if or (eq .Values.environment "prod") (eq .Values.environment "tt02") }}
 apiVersion: pyrra.dev/v1alpha1
 kind: ServiceLevelObjective
 metadata:
   name: {{ .Values.ingressRoute.name }}
   namespace: monitoring
   labels:
+    {{- include ".Chart.Name.labels" . | nindent 4 }}
     pyrra.dev/team: {{ .Values.team }}
     pyrra.dev/app: {{ .Values.appName }}
     release: kube-prometheus-stack

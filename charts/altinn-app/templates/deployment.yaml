@@ -21,9 +21,9 @@ spec:
       labels:
         {{- include ".Chart.Name.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include ".Chart.Name.serviceAccountName" . }}
+      serviceAccountName: {{ .Values.appName }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Values.appName }}
           image: "{{ .Values.image.repository }}:{{ required "image.tag not set" .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
