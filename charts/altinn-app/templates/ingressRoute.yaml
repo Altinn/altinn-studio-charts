@@ -38,9 +38,5 @@ spec:
     {{- end }}
   {{- end }}
   {{- if .Values.ingressRoute.tls }}
-  tls:
-    {{- if .Values.ingressRoute.tls.secretName }}
-    secretName: {{ .Values.ingressRoute.tls.secretName }}
-    {{- end }}
   {{- end }}
 

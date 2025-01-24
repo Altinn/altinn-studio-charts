@@ -17,9 +17,11 @@ spec:
       annotations:
         linkerd.io/inject: enabled
         config.linkerd.io/skip-outbound-ports: 9092,10255,9093,443
+        azure.workload.identity/skip-containers: linkerd-proxy;linkerd-init
       {{- end }}
       labels:
         {{- include ".Chart.Name.selectorLabels" . | nindent 8 }}
+        azure.workload.identity/use: "true"
     spec:
       serviceAccountName: {{ .Values.appName }}
       containers:
