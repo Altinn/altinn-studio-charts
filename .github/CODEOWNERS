@@ -1,0 +1,4 @@
+*                                   @altinn/team-core
+charts/altinn-dashboard-grafana/**  @altinn/team-platform 
+charts/deployment/**                @altinn/team-apps
+charts/pdf-generator/**             @Altinn/team-core 
