@@ -10,22 +10,23 @@ autoscaling:
     scaleUp:
       stabilizationWindowSeconds: 0
       policies:
-      - type: Pods
-        value: 1
-        periodSeconds: 15
+        - type: Pods
+          value: 1
+          periodSeconds: 15
     scaleDown:
       stabilizationWindowSeconds: 300
       policies:
-      - type: Pods
-        value: 1
-        periodSeconds: 60
+        - type: Pods
+          value: 1
+          periodSeconds: 60
 
 resources:
   requests:
     cpu: 50m
     memory: 256Mi
 
-podAnnotations: {}
+podAnnotations:
+  {}
   # Additional pod annotations (e.g. for mesh injection)
   # Enabling of linkerd in seperate value under
   # config.linkerd.io/proxy-cpu-request: 10m
@@ -49,9 +50,12 @@ service:
   externalPort: 80
   # If your application is running on another port, change only the internal port.
   internalPort: 5005
+# Enable dual stack for service
+ipv6:
+  enabled: true
 
 linkerd:
-    enabled: true
+  enabled: true
 
 ingressRoute:
   name: Will be inserted during deploy
@@ -77,7 +81,7 @@ volumeMounts:
     mountPath: "/accesstoken"
 
 volumes:
-  - name : datakeys
+  - name: datakeys
     persistentVolumeClaim:
       claimName: keys
   - name: accesstoken
