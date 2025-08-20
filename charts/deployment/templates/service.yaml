@@ -17,3 +17,9 @@ spec:
   selector:
     app: {{ template "fullname" . }}
     release: {{ .Release.Name }}
+{{- if .Values.ipv6.enabled }}
+  ipFamilyPolicy: PreferDualStack
+  ipFamilies:
+    - IPv4
+    - IPv6
+{{- end }}
