@@ -1,41 +1,66 @@
-replicaCount: 2
+replicaCount: 3
 
 environment: development
 
 autoscaling:
   enabled: true
   replicas:
-    min: 2
-    max: 6
-  avgCpuUtilization: 75
-  avgMemoryUtilization: 80
+    # Three replicas minimum means that we can handle a spike of 3 PDF generation requests in the same instant
+    # Seems like a reasonable minimum as these likely also spreads them across 3 AZs
+    min: 3
+    # The current browserless container with our current app cluster VMs
+    # can pretty much only process 1 PDF request at a time, as that takes anywhere from 1-1.5 cpu core
+    # for the entire duration of the PDF generation. This can be anywhere from 5 seconds to 15 seconds on average
+    # but with a pretty nasty tail latency up to ~60 seconds. This scaling is therefore pretty aggressive currently
+    # (and we also let the nodepool scale fairly high)
+    # We are working on optimizing both the PDF generation process and rendring perf of the app frontend
+    max: 60
+  # Since the current image doesn't handle concurrent requests at all, we need to scale up pretty aggressively here
+  # avgCpuUtilization refers to the average utilization of CPU requests across all replicas
+  # If we're at 60% that means on average every pod is utilizing ~0.5 cores given requests at 750m
+  avgCpuUtilization: 60
   behavior:
     scaleUp:
       stabilizationWindowSeconds: 0
       policies:
       - type: Pods
-        value: 1
-        periodSeconds: 15
+        # Limits scaleup of at most 2 pods per 5 second period
+        # With the current node size it won't take long before new nodes need to be added to the cluster
+        value: 2
+        periodSeconds: 10
     scaleDown:
       stabilizationWindowSeconds: 300
       policies:
       - type: Pods
+        # If we've seen lots of traffic we should be careful when scaling down
+        # So we should scale up quickly, but down slowly (at least slower)
         value: 1
-        periodSeconds: 60
+        periodSeconds: 30
 
 resources:
   requests:
-    cpu: 250m
-    memory: 384Mi
+    # Depending on app specifics, the container can take 1-1.5 cpu cores during rendering/PDF generation
+    # This was tuned during loadtesting
+    cpu: 750m
+    memory: 500Mi
 
 image:
-  # Set "repository" name of your image for manual Helm install and upgrade.
   repository: altinncr.azurecr.io/browserless/chrome
   tag: 1-puppeteer-21.4.1
   pullPolicy: IfNotPresent
   environment:
     - name: TZ
       value: "Europe/Oslo"
+    # Can't handle multiple requests concurrently, then latency spikes horribly and we get timeouts
+    - name: MAX_CONCURRENT_SESSIONS
+      value: "1"
+    # For the average request at 5-15s we can have a queue of 3 requests
+    # which will leave the last queued request to sometimes take 40-60 seconds
+    # Any bigger queue than this and the client will for sure time out
+    - name: MAX_QUEUE_LENGTH
+      value: "3"
+    - name: PREBOOT_CHROME
+      value: "true"
 
 service:
   name: pdf-generator
@@ -50,11 +75,15 @@ podAntiAffinity:
 startup:
   enabled: true
   path: "/metrics"
-  failureThreshold: 3
-  periodSeconds: 10
+  # Check startup probe fairly often as we are dependent
+  # on agressive scaling and handling requests quickly
+  failureThreshold: 20
+  periodSeconds: 1
   timeoutSeconds: 1
 readiness:
-  enabled: true
+  # Disabled by default, there is no good underlying mechanism
+  # that let's us know if we can't handle requests atm
+  enabled: false
   path: "/metrics"
   initialDelaySeconds: 30
   failureThreshold: 3
@@ -63,7 +92,9 @@ readiness:
 liveness:
   enabled: true
   path: "/metrics"
-  initialDelaySeconds: 3
+  # If we can't get metrics then we probably should just restart
+  # This is probably a pretty useless probe
+  initialDelaySeconds: 20
   failureThreshold: 3
   periodSeconds: 10
-  timeoutSeconds: 30
+  timeoutSeconds: 2
