@@ -1,4 +1,6 @@
 name: Release Charts
+permissions:
+  contents: write
 
 on:
   push:
