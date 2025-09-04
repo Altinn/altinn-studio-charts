@@ -1,4 +1,6 @@
 name: Validate Charts
+permissions:
+  contents: read
 
 on:
   push:
