@@ -33,6 +33,9 @@ image:
   repository: altinncr.azurecr.io/browserless/chrome
   tag: 1-puppeteer-21.4.1
   pullPolicy: IfNotPresent
+  env:
+    - name: TZ
+      value: "Europe/Oslo"
 
 service:
   name: pdf-generator
