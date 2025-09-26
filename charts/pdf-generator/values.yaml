@@ -33,7 +33,7 @@ image:
   repository: altinncr.azurecr.io/browserless/chrome
   tag: 1-puppeteer-21.4.1
   pullPolicy: IfNotPresent
-  env:
+  environment:
     - name: TZ
       value: "Europe/Oslo"
 
