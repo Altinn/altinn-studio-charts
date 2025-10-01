@@ -3,7 +3,7 @@ kind: ServiceProfile
 # Service profile gives us linkerd metrics which includes the path/route as a metric
 # Useful for analysis of metrics without probes polluting the data with noise
 metadata:
-  name: {{ template "name" . }}.{{ .Release.namespace }}.svc.cluster.local
+  name: {{ template "name" . }}.svc.cluster.local
   namespace: {{ .Release.namespace }}
 spec:
   routes:
