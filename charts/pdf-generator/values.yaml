@@ -81,14 +81,12 @@ startup:
   periodSeconds: 1
   timeoutSeconds: 1
 readiness:
-  # Disabled by default, there is no good underlying mechanism
-  # that let's us know if we can't handle requests atm
-  enabled: false
+  enabled: true
   path: "/metrics"
-  initialDelaySeconds: 30
+  initialDelaySeconds: 20
   failureThreshold: 3
-  periodSeconds: 3
-  timeoutSeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
 liveness:
   enabled: true
   path: "/metrics"
@@ -97,4 +95,4 @@ liveness:
   initialDelaySeconds: 20
   failureThreshold: 3
   periodSeconds: 10
-  timeoutSeconds: 2
+  timeoutSeconds: 5
