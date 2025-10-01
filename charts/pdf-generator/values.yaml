@@ -17,18 +17,28 @@ autoscaling:
     max: 60
   # Since the current image doesn't handle concurrent requests at all, we need to scale up pretty aggressively here
   # avgCpuUtilization refers to the average utilization of CPU requests across all replicas
-  # If we're at 60% that means on average every pod is utilizing ~0.5 cores given requests at 750m
-  avgCpuUtilization: 60
+  # Scaling formula: `desiredReplicas = ceil(currentReplicas * (currentMetricValue / desiredMetricValue))`
+  # Example 1 
+  # - `ceil(3 * (51.0 / 60.0))` = 3
+  # - `ceil(3 * (60.0 / 60.0))` = 3
+  # - `ceil(3 * (70.0 / 60.0))` = 4
+  # Example 2: 
+  # - `ceil(3 * (51.0 / 50.0))` = 4
+  # - `ceil(4 * (60.0 / 50.0))` = 5
+  # - `ceil(5 * (70.0 / 50.0))` = 7
+  # ^ this movement is then capped by the scaleUp behavior below
+  avgCpuUtilization: 50
   behavior:
     scaleUp:
       stabilizationWindowSeconds: 0
       policies:
       - type: Pods
-        # Limits scaleup of at most 2 pods per 5 second period
+        # Limits scaleup of at most 2 pods per 10 second period
         # With the current node size it won't take long before new nodes need to be added to the cluster
         value: 2
         periodSeconds: 10
     scaleDown:
+      # When evaluating the policy, takes the max metric value from the past 5 minutes
       stabilizationWindowSeconds: 300
       policies:
       - type: Pods
