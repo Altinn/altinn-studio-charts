@@ -1,0 +1,13 @@
+apiVersion: linkerd.io/v1alpha2
+kind: ServiceProfile
+# Service profile gives us linkerd metrics which includes the path/route as a metric
+# Useful for analysis of metrics without probes polluting the data with noise
+metadata:
+  name: {{ template "name" . }}.svc.cluster.local
+  namespace: {{ .Release.namespace }}
+spec:
+  routes:
+  - name: POST /pdf
+    condition:
+      method: POST
+      pathRegex: /pdf
