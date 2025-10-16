@@ -117,6 +117,9 @@ spec:
             periodSeconds: {{ .Values.liveness.periodSeconds }}
             timeoutSeconds: {{ .Values.liveness.timeoutSeconds }}
           {{- end }}
+      {{- if .Values.serviceAccountName }}
+      serviceAccountName: {{ .Values.serviceAccountName }}
+      {{- end }}
       volumes:
         {{- range $volume := .Values.volumes }}
           - name: {{ $volume.name }}
