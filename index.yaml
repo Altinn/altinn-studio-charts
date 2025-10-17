@@ -23,6 +23,14 @@ entries:
     version: 1.0.0
   deployment:
   - apiVersion: v1
+    created: "2025-10-17T08:02:04.287061224Z"
+    description: A Helm chart for Kubernetes
+    digest: 7d5fa1a28896cbb58ffd30d0c45d3bfd406ab555d2f8acba499da1c1411783be
+    name: deployment
+    urls:
+    - https://github.com/Altinn/altinn-studio-charts/releases/download/deployment-3.5.0/deployment-3.5.0.tgz
+    version: 3.5.0
+  - apiVersion: v1
     created: "2025-10-16T13:58:06.051279333Z"
     description: A Helm chart for Kubernetes
     digest: ca306882931ed964e856ffb7925190ccf5b6dbfe314fcec41dbf22f37fdaebd2
@@ -281,4 +289,4 @@ entries:
     urls:
     - https://github.com/Altinn/altinn-studio-charts/releases/download/traefik-crds-2.10.0/traefik-crds-2.10.0.tgz
     version: 2.10.0
-generated: "2025-10-16T13:58:06.051463027Z"
+generated: "2025-10-17T08:02:04.287230431Z"
