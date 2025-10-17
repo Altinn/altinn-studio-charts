@@ -32,7 +32,8 @@ podAnnotations:
   # config.linkerd.io/proxy-cpu-request: 10m
   # config.linkerd.io/proxy-memory-limit: 250Mi
   # config.linkerd.io/proxy-memory-request: 20Mi
-
+podLabels:
+  {}
 podAntiAffinity:
   enabled: true
 
