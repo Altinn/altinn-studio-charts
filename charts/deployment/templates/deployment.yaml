@@ -84,13 +84,14 @@ spec:
             runAsUser: 1000
             runAsGroup: 3000
             allowPrivilegeEscalation: false
-          {{- if .Values.volumeMounts}}
           volumeMounts:
             {{- range $mount := .Values.volumeMounts}}
             - name: {{ $mount.name }}
               mountPath: {{ $mount.mountPath }}
             {{- end }}
-          {{- end }}
+            - name: app-secrets-volume
+              mountPath: /mnt/app-secrets
+              readOnly: true
           {{- if .Values.startup.enabled}}
           startupProbe:
             httpGet:
@@ -125,13 +126,16 @@ spec:
       {{- end }}
       volumes:
         {{- range $volume := .Values.volumes }}
-          - name: {{ $volume.name }}
-            {{- if $volume.persistentVolumeClaim }}
-            persistentVolumeClaim:
-              claimName: {{ $volume.persistentVolumeClaim.claimName }}
-            {{- end }}
-            {{- if $volume.secret }}
-            secret:
-              secretName: {{ $volume.secret.secretName }}
-            {{- end }}
+        - name: {{ $volume.name }}
+          {{- if $volume.persistentVolumeClaim }}
+          persistentVolumeClaim:
+            claimName: {{ $volume.persistentVolumeClaim.claimName }}
+          {{- end }}
+          {{- if $volume.secret }}
+          secret:
+            secretName: {{ $volume.secret.secretName }}
+          {{- end }}
         {{- end }}
+        - name: app-secrets-volume
+          secret:
+            secretName: {{ template "fullname" . }}-secrets
