@@ -14,7 +14,7 @@ spec:
   {{- end }}
   routes:
   {{- range $route := $customRoute.routes }}
-  - match: {{ $route.match }}
+  - match: {{ $route.match | quote }}
     kind: {{ $route.kind }}
     {{- if $route.priority }}
     priority: {{ $route.priority }}
