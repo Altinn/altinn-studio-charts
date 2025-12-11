@@ -109,3 +109,20 @@ liveness:
   failureThreshold: 3
   periodSeconds: 10
   timeoutSeconds: 30
+
+# Custom ingress routes (additional IngressRoutes beyond the main one)
+# Example:
+# customIngressRoutes:
+#   - name: my-custom-ingress-route
+#     entryPoints:
+#       - http
+#       - https
+#     routes:
+#       - kind: Rule
+#         match: Host(`example.com`)&&PathPrefix(`/custom/`)
+#         middlewares:
+#           - name: hsts-header
+#         services:
+#           - name: my-service
+#             port: 80
+customIngressRoutes: []

@@ -1,0 +1,40 @@
+{{- $linkerd := .Values.linkerd }}
+{{- $fullName := include "fullname" . }}
+
+{{- range $customRoute := .Values.customIngressRoutes }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $customRoute.name }}
+spec:
+  entryPoints:
+  {{- range $entryPoint := $customRoute.entryPoints }}
+  - {{ $entryPoint }}
+  {{- end }}
+  routes:
+  {{- range $route := $customRoute.routes }}
+  - match: {{ $route.match | quote }}
+    kind: {{ $route.kind }}
+    {{- if $route.priority }}
+    priority: {{ $route.priority }}
+    {{- end }}
+    services:
+    {{- range $service := $route.services }}
+    - name: {{ $service.name }}
+      port: {{ $service.port }}
+    {{- end }}
+    {{- if or $route.middlewares $linkerd.enabled }}
+    middlewares:
+    {{- range $middleware := $route.middlewares }}
+      - name: {{ $middleware.name }}
+    {{- end }}
+    {{- if $linkerd.enabled }}
+      - name: {{ $fullName }}
+    {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if $customRoute.tls }}
+  tls: {}
+  {{- end }}
+{{- end }}
