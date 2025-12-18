@@ -37,6 +37,8 @@ podLabels:
 podAntiAffinity:
   enabled: true
 
+terminationGracePeriodSeconds: 30
+
 image:
   # Set "repository" name of your image for manual Helm install and upgrade.
   repository:
