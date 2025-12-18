@@ -52,6 +52,9 @@ spec:
               topologyKey: kubernetes.io/hostname
             weight: 100
     {{- end }}
+    {{- if .Values.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+    {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ required "A valid image.repository value is required!" .Values.image.repository }}:{{ .Values.image.tag }}"
