@@ -68,6 +68,11 @@ spec:
           {{- end }}
             - name: ALTINN_KEYS_DIRECTORY
               value: "/mnt/keys"
+            - name: POD_UID
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.uid
           ports:
             - containerPort: {{ .Values.service.internalPort }}
           resources:
