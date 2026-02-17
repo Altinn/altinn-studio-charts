@@ -45,6 +45,14 @@ image:
   tag: latest
   pullPolicy: Always
   pullSecrets: []
+  envFrom: []
+  # Additional environment variable sources.
+  # Example:
+  # envFrom:
+  #   - configMapRef:
+  #       name: apps-runtime-common-config-env
+  #   - secretRef:
+  #       name: apps-runtime-common-secrets-env
   # - name: myRegistryKeySecretName
 
 service:
@@ -90,6 +98,24 @@ volumes:
   - name: accesstoken
     secret:
       secretName: accesstoken
+
+appSecrets:
+  mountPath: /mnt/app-secrets
+  additionalSources: []
+  # Additional projected volume sources merged into appSecrets.mountPath.
+  # Example:
+  # additionalSources:
+  #   - configMap:
+  #       name: apps-runtime-common-config
+  #       items:
+  #         - key: runtime-common.json
+  #           path: runtime-common.json
+  #   - secret:
+  #       name: apps-runtime-common-secrets
+  #       optional: true
+  #       items:
+  #         - key: runtime-common-secrets.json
+  #           path: runtime-common-secrets.json
 
 startup:
   enabled: false

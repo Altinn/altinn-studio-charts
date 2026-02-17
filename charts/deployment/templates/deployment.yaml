@@ -75,6 +75,10 @@ spec:
                   fieldPath: metadata.uid
             - name: OTEL_RESOURCE_ATTRIBUTES
               value: "k8s.pod.uid=$(POD_UID)"
+          {{- if .Values.image.envFrom }}
+          envFrom:
+          {{- toYaml .Values.image.envFrom | nindent 12 }}
+          {{- end }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
           resources:
@@ -100,7 +104,7 @@ spec:
               mountPath: {{ $mount.mountPath }}
             {{- end }}
             - name: app-secrets-volume
-              mountPath: /mnt/app-secrets
+              mountPath: {{ .Values.appSecrets.mountPath }}
               readOnly: true
           {{- if .Values.startup.enabled}}
           startupProbe:
@@ -147,5 +151,10 @@ spec:
           {{- end }}
         {{- end }}
         - name: app-secrets-volume
-          secret:
-            secretName: {{ template "fullname" . }}-secrets
+          projected:
+            sources:
+              - secret:
+                  name: {{ template "fullname" . }}-secrets
+{{- with .Values.appSecrets.additionalSources }}
+{{- toYaml . | nindent 14 }}
+{{- end }}
