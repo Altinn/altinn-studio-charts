@@ -81,6 +81,7 @@ spec:
           {{- end }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
+              name: http
           resources:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}

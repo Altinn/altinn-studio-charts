@@ -56,7 +56,6 @@ image:
   # - name: myRegistryKeySecretName
 
 service:
-  name: deployment
   type: ClusterIP
   externalPort: 80
   # If your application is running on another port, change only the internal port.
