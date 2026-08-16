@@ -66,6 +66,12 @@ ipv6:
 
 linkerd:
   enabled: true
+  # Linkerd 2026.4.2 uses regular sidecars by default. Keep the proxy available for the app's
+  # 5-second endpoint drain delay plus 20-second application shutdown timeout.
+  # Set to 0 when the control plane injects Kubernetes native sidecars.
+  waitBeforeExitSeconds: 25
+  # Leave the final 5 seconds of the pod's 30-second termination budget for proxy draining.
+  shutdownGracePeriod: 5s
 
 ingressRoute:
   name: Will be inserted during deploy

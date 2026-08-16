@@ -30,6 +30,12 @@ spec:
         linkerd.io/inject: enabled
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
         config.linkerd.io/skip-outbound-ports: "443"
+        {{- with .Values.linkerd.waitBeforeExitSeconds }}
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: {{ . | quote }}
+        {{- end }}
+        {{- with .Values.linkerd.shutdownGracePeriod }}
+        config.linkerd.io/shutdown-grace-period: {{ . | quote }}
+        {{- end }}
         {{- end }}
     spec:
     {{- if .Values.image.pullSecrets }}
