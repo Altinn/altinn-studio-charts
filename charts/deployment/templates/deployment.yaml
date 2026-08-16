@@ -27,17 +27,18 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- if .Values.linkerd.enabled }}
-        {{- /* Reserve the end of the pod budget for Linkerd to drain its regular sidecar. */}}
-        {{- $proxyShutdownGracePeriodSeconds := 5 }}
+        {{- $endpointDrainDelaySeconds := 5 }}
+        {{- $hardShutdownBufferSeconds := 5 }}
         {{- $terminationGracePeriodSeconds := int .Values.terminationGracePeriodSeconds }}
-        {{- if le $terminationGracePeriodSeconds $proxyShutdownGracePeriodSeconds }}
-        {{- fail (printf "terminationGracePeriodSeconds must be greater than %d when Linkerd is enabled" $proxyShutdownGracePeriodSeconds) }}
+        {{- $reservedSeconds := add $endpointDrainDelaySeconds $hardShutdownBufferSeconds }}
+        {{- if le $terminationGracePeriodSeconds $reservedSeconds }}
+        {{- fail (printf "terminationGracePeriodSeconds must be greater than %d when Linkerd is enabled" $reservedSeconds) }}
         {{- end }}
         linkerd.io/inject: enabled
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
         config.linkerd.io/skip-outbound-ports: "443"
-        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: {{ sub $terminationGracePeriodSeconds $proxyShutdownGracePeriodSeconds | quote }}
-        config.linkerd.io/shutdown-grace-period: {{ printf "%ds" $proxyShutdownGracePeriodSeconds | quote }}
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: {{ $endpointDrainDelaySeconds | quote }}
+        config.linkerd.io/shutdown-grace-period: {{ sub $terminationGracePeriodSeconds $reservedSeconds | printf "%ds" | quote }}
         {{- end }}
     spec:
     {{- if .Values.image.pullSecrets }}
