@@ -27,9 +27,18 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
         {{- if .Values.linkerd.enabled }}
+        {{- $endpointDrainDelaySeconds := 5 }}
+        {{- $hardShutdownBufferSeconds := 5 }}
+        {{- $terminationGracePeriodSeconds := int .Values.terminationGracePeriodSeconds }}
+        {{- $reservedSeconds := add $endpointDrainDelaySeconds $hardShutdownBufferSeconds }}
+        {{- if le $terminationGracePeriodSeconds $reservedSeconds }}
+        {{- fail (printf "terminationGracePeriodSeconds must be greater than %d when Linkerd is enabled" $reservedSeconds) }}
+        {{- end }}
         linkerd.io/inject: enabled
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
         config.linkerd.io/skip-outbound-ports: "443"
+        config.alpha.linkerd.io/proxy-wait-before-exit-seconds: {{ $endpointDrainDelaySeconds | quote }}
+        config.linkerd.io/shutdown-grace-period: {{ sub $terminationGracePeriodSeconds $reservedSeconds | printf "%ds" | quote }}
         {{- end }}
     spec:
     {{- if .Values.image.pullSecrets }}
