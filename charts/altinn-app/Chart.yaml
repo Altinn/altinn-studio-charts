@@ -1,0 +1,9 @@
+apiVersion: v1
+name: altinn-app
+description: A Helm chart for Altinn apps
+version: 0.0.1
+appVersion: "latest"
+
+sources:
+  - https://github.com/Altinn/altinn-studio-charts
+  
