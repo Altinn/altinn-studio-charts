@@ -37,6 +37,12 @@ podLabels:
 podAntiAffinity:
   enabled: true
 
+# Limits voluntary disruptions, such as node drains, to one pod at a time.
+# Rendered only when the app can run more than one replica.
+podDisruptionBudget:
+  enabled: true
+  maxUnavailable: 1
+
 terminationGracePeriodSeconds: 30
 
 image:
