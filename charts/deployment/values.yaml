@@ -124,12 +124,12 @@ appSecrets:
 
 # The startup probe holds off readiness and liveness until the app answers, so neither needs an
 # initial delay. It allows up to failureThreshold * periodSeconds (2 minutes) for the app to start.
-# Unless startup.enabled is set, it is enabled when readiness or liveness is enabled.
+# Unless startup.enabled is set, it is enabled with liveness, which would otherwise restart an app
+# that starts slowly. Unless startup.path is set, it probes liveness.path.
 # Readiness takes an unresponsive pod out of the Service after about 10 seconds, and liveness
 # restarts it after 30-40. Timeouts do not exceed the period, so a hanging /health does not
 # stretch either.
 startup:
-  path: /health
   failureThreshold: 120
   periodSeconds: 1
   timeoutSeconds: 1
