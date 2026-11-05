@@ -116,10 +116,14 @@ spec:
             - name: app-secrets-volume
               mountPath: {{ .Values.appSecrets.mountPath }}
               readOnly: true
-          {{- if .Values.startup.enabled}}
+          {{- $startupEnabled := .Values.liveness.enabled }}
+          {{- if hasKey .Values.startup "enabled" }}
+          {{- $startupEnabled = .Values.startup.enabled }}
+          {{- end }}
+          {{- if $startupEnabled }}
           startupProbe:
             httpGet:
-              path: {{ .Values.startup.path }}
+              path: {{ .Values.startup.path | default .Values.liveness.path }}
               port: {{ .Values.service.internalPort }}
             failureThreshold: {{ .Values.startup.failureThreshold }}
             periodSeconds: {{ .Values.startup.periodSeconds }}
