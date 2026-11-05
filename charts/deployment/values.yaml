@@ -122,23 +122,25 @@ appSecrets:
   #         - key: runtime-common-secrets.json
   #           path: runtime-common-secrets.json
 
+# The startup probe holds off readiness and liveness until the app answers, so neither needs an
+# initial delay. It allows up to failureThreshold * periodSeconds (2 minutes) for the app to start.
+# Unless startup.enabled is set, it is enabled when readiness or liveness is enabled.
 startup:
-  enabled: false
   path: /health
-  failureThreshold: 3
-  periodSeconds: 10
+  failureThreshold: 120
+  periodSeconds: 1
   timeoutSeconds: 1
 readiness:
   enabled: false
   path: /health
-  initialDelaySeconds: 30
+  initialDelaySeconds: 0
   failureThreshold: 3
   periodSeconds: 3
   timeoutSeconds: 30
 liveness:
   enabled: false
   path: /health
-  initialDelaySeconds: 3
+  initialDelaySeconds: 0
   failureThreshold: 3
   periodSeconds: 10
   timeoutSeconds: 30
