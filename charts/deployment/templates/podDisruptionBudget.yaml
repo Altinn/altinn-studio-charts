@@ -1,0 +1,22 @@
+{{- $maxReplicas := int .Values.replicaCount }}
+{{- if .Values.autoscaling.enabled }}
+{{- $maxReplicas = int (.Values.autoscaling.replicas.max | default 6) }}
+{{- end }}
+{{- if and .Values.podDisruptionBudget.enabled (gt $maxReplicas 1) }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  # Lets drains evict pods that are not ready, so one broken replica cannot block a node drain.
+  unhealthyPodEvictionPolicy: AlwaysAllow
+  maxUnavailable: {{ .Values.podDisruptionBudget.maxUnavailable }}
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}
+{{- end }}
