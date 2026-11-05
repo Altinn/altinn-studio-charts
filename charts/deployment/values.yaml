@@ -48,8 +48,7 @@ terminationGracePeriodSeconds: 30
 # Each app runs as its own ServiceAccount, named like the Service (<release>-deployment).
 # Set serviceAccountName to run as an existing ServiceAccount instead; the chart then creates none.
 serviceAccount:
-  create: true
-  # Annotations for the ServiceAccount, such as azure.workload.identity/client-id.
+  # Annotations for the app's ServiceAccount, such as azure.workload.identity/client-id.
   annotations: {}
 # Apps do not call the Kubernetes API, so their pods get no API token. Linkerd and Azure Workload
 # Identity mount their own projected tokens and do not depend on it.

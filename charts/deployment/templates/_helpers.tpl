@@ -25,12 +25,8 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Name of the ServiceAccount the app runs as. Empty when the app uses the namespace's default ServiceAccount.
+Name of the ServiceAccount the app runs as: serviceAccountName when set, otherwise the app's own.
 */}}
 {{- define "serviceaccountname" -}}
-{{- if .Values.serviceAccountName -}}
-{{- .Values.serviceAccountName -}}
-{{- else if .Values.serviceAccount.create -}}
-{{- template "fullname" . -}}
-{{- end -}}
+{{- .Values.serviceAccountName | default (include "fullname" .) -}}
 {{- end -}}
