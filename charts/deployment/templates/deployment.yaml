@@ -149,9 +149,8 @@ spec:
             periodSeconds: {{ .Values.liveness.periodSeconds }}
             timeoutSeconds: {{ .Values.liveness.timeoutSeconds }}
           {{- end }}
-      {{- if .Values.serviceAccountName }}
-      serviceAccountName: {{ .Values.serviceAccountName }}
-      {{- end }}
+      serviceAccountName: {{ template "serviceaccountname" . }}
+      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
       volumes:
         {{- range $volume := .Values.volumes }}
         - name: {{ $volume.name }}
