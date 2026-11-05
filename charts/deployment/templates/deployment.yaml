@@ -149,9 +149,10 @@ spec:
             periodSeconds: {{ .Values.liveness.periodSeconds }}
             timeoutSeconds: {{ .Values.liveness.timeoutSeconds }}
           {{- end }}
-      {{- if .Values.serviceAccountName }}
-      serviceAccountName: {{ .Values.serviceAccountName }}
+      {{- with include "serviceaccountname" . }}
+      serviceAccountName: {{ . }}
       {{- end }}
+      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
       volumes:
         {{- range $volume := .Values.volumes }}
         - name: {{ $volume.name }}
